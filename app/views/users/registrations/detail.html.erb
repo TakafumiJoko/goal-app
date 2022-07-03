@@ -5,11 +5,21 @@
   <%= form_with model: [@user, @user.goals.build] do |form| %>
     <%= form.text_field :goal %>
     <%= form.date_field :time_limit %>
+
+    <%= form.fields_for :tasks, @goal.tasks.build do |t| %>
+      <%= render 'task_fields', f: t %>
+    <% end %>
+
     <%= form.submit %>
   <% end %>
   <% @goals.each do |goal| %>
     <%= goal.goal %>
     <%= goal.time_limit %>
+
+    <% goal.tasks.each do |task| %>
+      <%= task.task %>
+      <%= task.time_limit %>
+    <% end %>
   <% end %>
 
 <% else %>

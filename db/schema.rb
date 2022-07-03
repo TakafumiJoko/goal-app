@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_07_02_025041) do
+ActiveRecord::Schema.define(version: 2022_07_03_011204) do
 
   create_table "goals", force: :cascade do |t|
     t.string "goal", null: false
@@ -20,6 +20,16 @@ ActiveRecord::Schema.define(version: 2022_07_02_025041) do
     t.integer "user_id"
     t.index ["goal", "time_limit"], name: "index_goals_on_goal_and_time_limit"
     t.index ["user_id"], name: "index_goals_on_user_id"
+  end
+
+  create_table "tasks", force: :cascade do |t|
+    t.string "task", null: false
+    t.date "time_limit", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.integer "goal_id"
+    t.index ["goal_id"], name: "index_tasks_on_goal_id"
+    t.index ["task", "time_limit"], name: "index_tasks_on_task_and_time_limit"
   end
 
   create_table "users", force: :cascade do |t|
@@ -35,4 +45,5 @@ ActiveRecord::Schema.define(version: 2022_07_02_025041) do
   end
 
   add_foreign_key "goals", "users"
+  add_foreign_key "tasks", "goals"
 end
